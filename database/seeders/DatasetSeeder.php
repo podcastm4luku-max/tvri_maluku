@@ -45,10 +45,22 @@ class DatasetSeeder extends Seeder
             ]
         );
 
-        // 2. Pastikan Urusan Terdaftar
-        Urusan::firstOrCreate(['id' => 3], ['name' => 'Urusan Pemerintahan Bidang Pendidikan', 'sort_order' => 1]);
-        Urusan::firstOrCreate(['id' => 23], ['name' => 'Urusan Pemerintahan Bidang Kebudayaan', 'sort_order' => 2]);
-        Urusan::firstOrCreate(['id' => 1], ['name' => 'Lembaga Penyiaran Publik', 'sort_order' => 3]);
+        // 2. Pastikan Urusan Terdaftar (seluruh id yang dipakai datasets.json)
+        $urusans = [
+            1 => 'Tata Usaha',
+            2 => 'Berita',
+            3 => 'Program',
+            4 => 'Konten Media Baru',
+            5 => 'Promo',
+            6 => 'Umum',
+            7 => 'Teknik',
+            8 => 'Teknik Transmisi',
+            9 => 'Pengembangan Usaha',
+            10 => 'Keuangan',
+        ];
+        foreach ($urusans as $id => $name) {
+            Urusan::firstOrCreate(['id' => $id], ['name' => $name, 'sort_order' => $id - 1]);
+        }
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Dataset::truncate();
