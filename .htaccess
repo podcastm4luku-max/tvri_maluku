@@ -1,0 +1,15 @@
+# Dipakai hanya jika document root hosting mengarah ke folder project (bukan ke /public).
+# Jika document root sudah diarahkan ke /public, file ini tidak terbaca dan tidak berpengaruh.
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Blokir akses langsung ke file/folder tersembunyi (.env, .git, dll)
+    RewriteRule (^|/)\.(?!well-known) - [F,L]
+
+    # Teruskan semua request ke front controller di folder public
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
